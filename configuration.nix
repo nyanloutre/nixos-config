@@ -37,7 +37,6 @@
     git
     zsh
     tmux
-    gnupg
   ];
 
   virtualisation.rkt.enable = true;
