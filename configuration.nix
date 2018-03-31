@@ -35,9 +35,10 @@
   environment.systemPackages = with pkgs; [
     neovim
     git
-    zsh
     tmux
   ];
+
+  programs.zsh.enable = true;
 
   virtualisation.rkt.enable = true;
   boot.kernelModules = [ "overlay" ];
