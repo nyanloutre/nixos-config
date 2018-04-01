@@ -23,5 +23,11 @@
 
   services.grafana.enable = true;
   services.grafana.addr = "0.0.0.0";
-  networking.firewall.allowedTCPPorts = [ 3000 ];
+
+  services.emby.enable = true;
+
+  networking.firewall.allowedTCPPorts = [
+    3000 # Grafana
+    8096 # Emby
+  ];
 }
