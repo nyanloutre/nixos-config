@@ -8,7 +8,7 @@
     [ <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
     ];
 
-  boot.initrd.availableKernelModules = [ "ahci" "xhci_pci" "nvme" "usbhid" "usb_storage" "sr_mod" ];
+  boot.initrd.availableKernelModules = [ "ahci" "xhci_pci" "nvme" "usbhid" "sd_mod" ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
@@ -22,8 +22,33 @@
       fsType = "vfat";
     };
 
+  fileSystems."/mnt/loutrepool" =
+    { device = "loutrepool";
+      fsType = "zfs";
+    };
+
+  fileSystems."/mnt/medias" =
+    { device = "loutrepool/medias";
+      fsType = "zfs";
+    };
+
+  fileSystems."/mnt/syncthing" =
+    { device = "loutrepool/syncthing";
+      fsType = "zfs";
+    };
+
+  fileSystems."/mnt/containers_volumes" =
+    { device = "loutrepool/containers_volumes";
+      fsType = "zfs";
+    };
+
+  fileSystems."/mnt/steam" =
+    { device = "loutrepool/steam";
+      fsType = "zfs";
+    };
+
   swapDevices = [ ];
 
   nix.maxJobs = lib.mkDefault 4;
-  powerManagement.cpuFreqGovernor = "ondemand";
+  powerManagement.cpuFreqGovernor = lib.mkDefault "ondemand";
 }
