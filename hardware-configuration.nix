@@ -27,23 +27,23 @@
       fsType = "zfs";
     };
 
-  fileSystems."/mnt/medias" =
-    { device = "loutrepool/medias";
-      fsType = "zfs";
-    };
-
-  fileSystems."/mnt/syncthing" =
-    { device = "loutrepool/syncthing";
-      fsType = "zfs";
-    };
-
   fileSystems."/mnt/containers_volumes" =
     { device = "loutrepool/containers_volumes";
       fsType = "zfs";
     };
 
+  fileSystems."/mnt/medias" =
+    { device = "loutrepool/medias";
+      fsType = "zfs";
+    };
+
   fileSystems."/mnt/steam" =
     { device = "loutrepool/steam";
+      fsType = "zfs";
+    };
+
+  fileSystems."/mnt/syncthing" =
+    { device = "loutrepool/syncthing";
       fsType = "zfs";
     };
 
