@@ -47,6 +47,11 @@
       fsType = "zfs";
     };
 
+  fileSystems."/mnt/influxdb" =
+    { device = "loutrepool/etc/influxdb";
+      fsType = "zfs";
+    };
+
   swapDevices = [ ];
 
   nix.maxJobs = lib.mkDefault 4;
