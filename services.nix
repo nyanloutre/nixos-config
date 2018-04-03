@@ -67,8 +67,11 @@
     3000 # Grafana
     8096 # Emby
     111 2049 4000 4001 4002 # NFS
+    3483 9000 # Slimserver
+    8384 # Syncthing
   ];
   networking.firewall.allowedUDPPorts = [
     111 2049 4000 4001 4002 # NFS
+    3483 # Slimserver
   ];
 }
