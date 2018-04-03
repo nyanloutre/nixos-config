@@ -22,16 +22,6 @@
       fsType = "vfat";
     };
 
-  fileSystems."/mnt/loutrepool" =
-    { device = "loutrepool";
-      fsType = "zfs";
-    };
-
-  fileSystems."/mnt/containers_volumes" =
-    { device = "loutrepool/containers_volumes";
-      fsType = "zfs";
-    };
-
   fileSystems."/mnt/medias" =
     { device = "loutrepool/medias";
       fsType = "zfs";
@@ -47,8 +37,28 @@
       fsType = "zfs";
     };
 
-  fileSystems."/mnt/influxdb" =
-    { device = "loutrepool/etc/influxdb";
+  fileSystems."/var/db/influxdb" =
+    { device = "loutrepool/var/influxdb";
+      fsType = "zfs";
+    };
+
+  fileSystems."/var/lib/grafana" =
+    { device = "loutrepool/var/grafana";
+      fsType = "zfs";
+    };
+
+  fileSystems."/var/lib/emby/ProgramData-Server" =
+    { device = "loutrepool/var/emby";
+      fsType = "zfs";
+    };
+
+  fileSystems."/var/lib/syncthing" =
+    { device = "loutrepool/var/syncthing";
+      fsType = "zfs";
+    };
+
+  fileSystems."/var/lib/duplicati" =
+    { device = "loutrepool/var/duplicati";
       fsType = "zfs";
     };
 
