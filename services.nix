@@ -135,6 +135,11 @@
 
   services.radarr.enable = true;
 
+  services.murmur.enable = true;
+  services.murmur.bandwidth = 128000;
+  services.murmur.imgMsgLength = 0;
+  services.murmur.textMsgLength = 0;
+
   networking.firewall.allowedTCPPorts = [
     80 443 # HAProxy
     111 2049 4000 4001 4002 # NFS

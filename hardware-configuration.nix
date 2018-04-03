@@ -82,6 +82,11 @@
       fsType = "zfs";
     };
 
+   fileSystems."/var/lib/murmur" =
+    { device = "loutrepool/var/murmur";
+      fsType = "zfs";
+    };
+
   swapDevices = [ ];
 
   nix.maxJobs = lib.mkDefault 4;
