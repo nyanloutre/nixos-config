@@ -27,7 +27,7 @@
       fsType = "zfs";
     };
 
-  fileSystems."/mnt/steam" =
+  fileSystems."/exports/steam" =
     { device = "loutrepool/steam";
       fsType = "zfs";
     };
