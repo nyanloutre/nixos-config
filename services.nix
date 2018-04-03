@@ -44,7 +44,7 @@
       serviceConfig = {
         Slice = "machine.slice";
         ExecStart = "${pkgs.rkt}/bin/rkt --insecure-options=image --pull-policy=update run --volume volume-config,kind=host,source=/var/lib/duplicati --volume volume-source,kind=host,source=/mnt/medias,readOnly=true --port 8200-tcp:8200 --dns 8.8.8.8 --dns 8.8.4.4 docker://linuxserver/duplicati";
-        ExecStopPost = "/usr/bin/rkt gc --mark-only";
+        ExecStopPost = "${pkgs.rkt}/bin/rkt gc --mark-only";
         KillMode = "mixed";
         Restart = "on-failure";
 	RestartSec = 3;
