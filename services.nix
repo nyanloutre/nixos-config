@@ -18,9 +18,11 @@
       acl letsencrypt-acl path_beg /.well-known/acme-challenge/
       acl grafana-acl hdr(host) -i grafana.tars.nyanlout.re
       acl emby-acl hdr(host) -i emby.tars.nyanlout.re
+      acl radarr-acl hdr(host) -i radarr.tars.nyanlout.re
       use_backend letsencrypt-backend if letsencrypt-acl
       use_backend grafana-backend if grafana-acl
       use_backend emby-backend if emby-acl
+      use_backend radarr-backend if radarr-acl
     backend letsencrypt-backend
       mode http
       server letsencrypt 127.0.0.1:54321
@@ -30,6 +32,9 @@
     backend emby-backend
       mode http
       server emby 127.0.0.1:8096 check
+    backend radarr-backend
+      mode http
+      server radarr 127.0.0.1:7878 check
   '';
 
   services.nginx.enable = true;
@@ -110,6 +115,8 @@
     lockdPort = 4001;
     mountdPort = 4002;
   };
+
+  services.radarr.enable = true;
 
   networking.firewall.allowedTCPPorts = [
     80 443 # HAProxy

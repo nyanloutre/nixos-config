@@ -72,6 +72,10 @@
       fsType = "zfs";
     };
 
+  fileSystems."/var/lib/radarr" =
+    { device = "loutrepool/var/radarr";
+      fsType = "zfs";
+    };
 
   swapDevices = [ ];
 
