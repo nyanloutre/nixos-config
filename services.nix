@@ -28,6 +28,9 @@
   services.emby.enable = true;
   services.emby.dataDir = "/var/lib/emby/ProgramData-Server";
 
+  services.slimserver.enable = true;
+  services.slimserver.dataDir = "/var/lib/slimserver";
+
   services.syncthing.enable = true;
   services.syncthing.dataDir = "/var/lib/syncthing";
   services.syncthing.openDefaultPorts = true;

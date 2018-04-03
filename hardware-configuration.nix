@@ -62,6 +62,11 @@
       fsType = "zfs";
     };
 
+  fileSystems."/var/lib/slimserver" =
+    { device = "loutrepool/var/slimserver";
+      fsType = "zfs";
+    };
+
   swapDevices = [ ];
 
   nix.maxJobs = lib.mkDefault 4;
