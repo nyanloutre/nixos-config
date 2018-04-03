@@ -12,6 +12,8 @@
     defaults
       option forwardfor
       option http-server-close
+    userlist LOUTRE
+      user paul password $6$6rDdCtzSVsAwB6KP$V8bR7KP7FSL2BSEh6n3op6iYhAnsVSPI2Ar3H6MwKrJ/lZRzUI8a0TwVBD2JPnAntUhLpmRudrvdq2Ls2odAy.
     frontend www-http
       mode http
       bind :80
@@ -19,10 +21,12 @@
       acl grafana-acl hdr(host) -i grafana.tars.nyanlout.re
       acl emby-acl hdr(host) -i emby.tars.nyanlout.re
       acl radarr-acl hdr(host) -i radarr.tars.nyanlout.re
+      acl transmission-acl hdr(host) -i transmission.tars.nyanlout.re
       use_backend letsencrypt-backend if letsencrypt-acl
       use_backend grafana-backend if grafana-acl
       use_backend emby-backend if emby-acl
       use_backend radarr-backend if radarr-acl
+      use_backend transmission-backend if transmission-acl
     backend letsencrypt-backend
       mode http
       server letsencrypt 127.0.0.1:54321
@@ -35,6 +39,11 @@
     backend radarr-backend
       mode http
       server radarr 127.0.0.1:7878 check
+    backend transmission-backend
+      mode http
+      acl AuthOK_LOUTRE http_auth(LOUTRE)
+      http-request auth realm LOUTRE if !AuthOK_LOUTRE
+      server radarr 127.0.0.1:9091 check
   '';
 
   services.nginx.enable = true;
@@ -119,7 +128,8 @@
   services.transmission.enable = true;
   services.transmission.home = "/var/lib/transmission";
   services.transmission.settings = {
-    rpc-bind-address = "0.0.0.0";
+    rpc-bind-address = "127.0.0.1";
+    rpc-host-whitelist = "*";
     rpc-whitelist-enabled = false;
   };
 
@@ -130,7 +140,6 @@
     111 2049 4000 4001 4002 # NFS
     3483 9000 # Slimserver
     8384 # Syncthing
-    9091 # Transmission
   ];
   networking.firewall.allowedUDPPorts = [
     111 2049 4000 4001 4002 # NFS
