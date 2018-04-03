@@ -3,41 +3,40 @@
 {
   services.haproxy.enable = true;
   services.haproxy.config = ''
-    defaults
+    global
       log /dev/log local0
       log /dev/log local1 notice
       chroot /var/lib/haproxy
       user haproxy
       group haproxy
+    defaults
       option forwardfor
       option http-server-close
     frontend www-http
-      bind tars.nyanlout.re:80
-      reqadd X-Forwarded-Proto:\ http
-      default_backend www-backend
-    frontend www-https
-      bind tars.nyanlout.re:443 ssl crt /var/lib/acme/tars.nyanlout.re/fullchain.pem
-      reqadd X-Forwarded-Proto:\ https
+      mode http
+      bind :80
       acl letsencrypt-acl path_beg /.well-known/acme-challenge/
       use_backend letsencrypt-backend if letsencrypt-acl
-      default_backend www-backend
-    backend www-backend
-      redirect scheme https if !{ ssl_fc }
-      server www-1 127.0.0.1:3000 check
+      use_backend grafana-backend if !letsencrypt-acl
+    backend grafana-backend
+      mode http
+      server grafana 127.0.0.1:3000 check
     backend letsencrypt-backend
+      mode http
       server letsencrypt 127.0.0.1:54321
   '';
 
   services.nginx.enable = true;
   services.nginx.virtualHosts = {
     "acme" = {
-      listen = [ { port = 54321; } ];
-      locations = { "/" = { root = "/var/www/challenges" }; };
+      listen = [ { addr = "127.0.0.1"; port = 54321; } ];
+      locations = { "/" = { root = "/var/www/challenges"; }; };
     };
   };
 
   security.acme.certs = {
     "tars.nyanlout.re" = {
+      user = "nginx";
       webroot = "/var/www/challenges";
       email = "paul@nyanlout.re";
     };
