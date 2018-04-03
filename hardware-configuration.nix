@@ -77,6 +77,11 @@
       fsType = "zfs";
     };
 
+   fileSystems."/var/lib/transmission" =
+    { device = "loutrepool/var/transmission";
+      fsType = "zfs";
+    };
+
   swapDevices = [ ];
 
   nix.maxJobs = lib.mkDefault 4;

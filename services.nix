@@ -116,6 +116,13 @@
     mountdPort = 4002;
   };
 
+  services.transmission.enable = true;
+  services.transmission.home = "/var/lib/transmission";
+  services.transmission.settings = {
+    rpc-bind-address = "0.0.0.0";
+    rpc-whitelist-enabled = false;
+  };
+
   services.radarr.enable = true;
 
   networking.firewall.allowedTCPPorts = [
@@ -123,6 +130,7 @@
     111 2049 4000 4001 4002 # NFS
     3483 9000 # Slimserver
     8384 # Syncthing
+    9091 # Transmission
   ];
   networking.firewall.allowedUDPPorts = [
     111 2049 4000 4001 4002 # NFS
