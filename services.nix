@@ -50,8 +50,22 @@
     };
   };
   
+  services.nfs.server = {
+    enable = true;
+    exports = ''
+      /exports/steam  192.168.1.0/24(rw,no_root_squash)
+    '';
+    statdPort = 4000;
+    lockdPort = 4001;
+    mountdPort = 4002;
+  };
+
   networking.firewall.allowedTCPPorts = [
     3000 # Grafana
     8096 # Emby
+    111 2049 4000 4001 4002 # NFS
+  ];
+  networking.firewall.allowedUDPPorts = [
+    111 2049 4000 4001 4002 # NFS
   ];
 }
