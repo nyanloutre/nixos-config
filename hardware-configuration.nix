@@ -67,6 +67,12 @@
       fsType = "zfs";
     };
 
+  fileSystems."/var/lib/acme" =
+    { device = "loutrepool/var/acme";
+      fsType = "zfs";
+    };
+
+
   swapDevices = [ ];
 
   nix.maxJobs = lib.mkDefault 4;
