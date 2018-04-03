@@ -16,14 +16,20 @@
       mode http
       bind :80
       acl letsencrypt-acl path_beg /.well-known/acme-challenge/
+      acl grafana-acl hdr(host) -i grafana.tars.nyanlout.re
+      acl emby-acl hdr(host) -i emby.tars.nyanlout.re
       use_backend letsencrypt-backend if letsencrypt-acl
-      use_backend grafana-backend if !letsencrypt-acl
-    backend grafana-backend
-      mode http
-      server grafana 127.0.0.1:3000 check
+      use_backend grafana-backend if grafana-acl
+      use_backend emby-backend if emby-acl
     backend letsencrypt-backend
       mode http
       server letsencrypt 127.0.0.1:54321
+    backend grafana-backend
+      mode http
+      server grafana 127.0.0.1:3000 check
+    backend emby-backend
+      mode http
+      server emby 127.0.0.1:8096 check
   '';
 
   services.nginx.enable = true;
@@ -34,13 +40,14 @@
     };
   };
 
-  security.acme.certs = {
-    "tars.nyanlout.re" = {
-      user = "nginx";
-      webroot = "/var/www/challenges";
-      email = "paul@nyanlout.re";
-    };
-  };
+#  security.acme.certs = {
+#    "grafana.tars.nyanlout.re" = {
+#      user = "nginx";
+#      webroot = "/var/www/challenges";
+#      email = "paul@nyanlout.re";
+#    };
+#  };
+#  security.acme.directory = "/var/lib/acme";
 
   services.influxdb.enable = true;
   services.influxdb.dataDir = "/var/db/influxdb";
@@ -63,7 +70,7 @@
   };
 
   services.grafana.enable = true;
-  services.grafana.addr = "0.0.0.0";
+  services.grafana.addr = "127.0.0.1";
   services.grafana.dataDir = "/var/lib/grafana";
 
   services.emby.enable = true;
