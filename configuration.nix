@@ -39,6 +39,8 @@
     tmux
   ];
 
+  nixpkgs.config.allowUnfree = true;
+
   programs.zsh.enable = true;
 
   virtualisation.rkt.enable = true;
