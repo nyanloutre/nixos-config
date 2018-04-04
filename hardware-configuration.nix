@@ -32,11 +32,6 @@
       fsType = "zfs";
     };
 
-  fileSystems."/mnt/syncthing" =
-    { device = "loutrepool/syncthing";
-      fsType = "zfs";
-    };
-
   fileSystems."/var/db/influxdb" =
     { device = "loutrepool/var/influxdb";
       fsType = "zfs";
