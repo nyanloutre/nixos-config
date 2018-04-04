@@ -6,7 +6,6 @@
     global
       log /dev/log local0
       log /dev/log local1 notice
-      chroot /var/lib/haproxy
       user haproxy
       group haproxy
     defaults
@@ -14,15 +13,17 @@
       option http-server-close
     userlist LOUTRE
       user paul password $6$6rDdCtzSVsAwB6KP$V8bR7KP7FSL2BSEh6n3op6iYhAnsVSPI2Ar3H6MwKrJ/lZRzUI8a0TwVBD2JPnAntUhLpmRudrvdq2Ls2odAy.
-    frontend www-http
-      mode http
+    frontend public
       bind :80
+      bind :443 ssl crt /var/lib/acme/tars.nyanlout.re/full.pem
+      mode http
       acl letsencrypt-acl path_beg /.well-known/acme-challenge/
+      use_backend letsencrypt-backend if letsencrypt-acl
+      redirect scheme https if !{ ssl_fc } !letsencrypt-acl
       acl grafana-acl hdr(host) -i grafana.tars.nyanlout.re
       acl emby-acl hdr(host) -i emby.tars.nyanlout.re
       acl radarr-acl hdr(host) -i radarr.tars.nyanlout.re
       acl transmission-acl hdr(host) -i transmission.tars.nyanlout.re
-      use_backend letsencrypt-backend if letsencrypt-acl
       use_backend grafana-backend if grafana-acl
       use_backend emby-backend if emby-acl
       use_backend radarr-backend if radarr-acl
@@ -64,6 +65,8 @@
       };
       webroot = "/var/www/challenges/";
       email = "paul@nyanlout.re";
+      user = "haproxy";
+      group = "haproxy";
     };
   };
   security.acme.directory = "/var/lib/acme";
