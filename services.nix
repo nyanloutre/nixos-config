@@ -24,10 +24,12 @@
       acl emby-acl hdr(host) -i emby.tars.nyanlout.re
       acl radarr-acl hdr(host) -i radarr.tars.nyanlout.re
       acl transmission-acl hdr(host) -i transmission.tars.nyanlout.re
+      acl syncthing-acl hdr(host) -i syncthing.tars.nyanlout.re
       use_backend grafana-backend if grafana-acl
       use_backend emby-backend if emby-acl
       use_backend radarr-backend if radarr-acl
       use_backend transmission-backend if transmission-acl
+      use_backend syncthing-backend if syncthing-acl
     backend letsencrypt-backend
       mode http
       server letsencrypt 127.0.0.1:54321
@@ -44,7 +46,12 @@
       mode http
       acl AuthOK_LOUTRE http_auth(LOUTRE)
       http-request auth realm LOUTRE if !AuthOK_LOUTRE
-      server radarr 127.0.0.1:9091 check
+      server transmission 127.0.0.1:9091 check
+    backend syncthing-backend
+      mode http
+      acl AuthOK_LOUTRE http_auth(LOUTRE)
+      http-request auth realm LOUTRE if !AuthOK_LOUTRE
+      server syncthing 127.0.0.1:8384 check
   '';
 
   services.nginx.enable = true;
@@ -62,6 +69,7 @@
         "emby.tars.nyanlout.re" = null;
         "radarr.tars.nyanlout.re" = null;
         "transmission.tars.nyanlout.re" = null;
+        "syncthing.tars.nyanlout.re" = null;
       };
       webroot = "/var/www/challenges/";
       email = "paul@nyanlout.re";
