@@ -8,6 +8,10 @@
       log /dev/log local1 notice
       user haproxy
       group haproxy
+      ssl-default-bind-ciphers ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256
+      ssl-default-bind-options no-sslv3 no-tlsv10 no-tlsv11 no-tls-tickets
+      ssl-default-server-ciphers ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256
+      ssl-default-server-options no-sslv3 no-tlsv10 no-tlsv11 no-tls-tickets
     defaults
       option forwardfor
       option http-server-close
@@ -19,7 +23,7 @@
       mode http
       acl letsencrypt-acl path_beg /.well-known/acme-challenge/
       use_backend letsencrypt-backend if letsencrypt-acl
-      redirect scheme https if !{ ssl_fc } !letsencrypt-acl
+      redirect scheme https code 301 if !{ ssl_fc } !letsencrypt-acl
       acl grafana-acl hdr(host) -i grafana.tars.nyanlout.re
       acl emby-acl hdr(host) -i emby.tars.nyanlout.re
       acl radarr-acl hdr(host) -i radarr.tars.nyanlout.re
