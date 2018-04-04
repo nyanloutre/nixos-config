@@ -10,7 +10,7 @@
   };
   
   users.extraUsers.victor =
-  { uid = 1001;
+  { uid = 1111;
     isNormalUser = true;
     description = "Victor SENE";
     extraGroups = [ "wheel" "networkmanager" ];
