@@ -72,12 +72,12 @@
       fsType = "zfs";
     };
 
-   fileSystems."/var/lib/transmission" =
+  fileSystems."/var/lib/transmission" =
     { device = "loutrepool/var/transmission";
       fsType = "zfs";
     };
 
-   fileSystems."/var/lib/murmur" =
+  fileSystems."/var/lib/murmur" =
     { device = "loutrepool/var/murmur";
       fsType = "zfs";
     };
