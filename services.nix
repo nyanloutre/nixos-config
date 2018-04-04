@@ -54,14 +54,19 @@
     };
   };
 
-#  security.acme.certs = {
-#    "grafana.tars.nyanlout.re" = {
-#      user = "nginx";
-#      webroot = "/var/www/challenges";
-#      email = "paul@nyanlout.re";
-#    };
-#  };
-#  security.acme.directory = "/var/lib/acme";
+  security.acme.certs = {
+    "tars.nyanlout.re" = {
+      extraDomains = {
+        "grafana.tars.nyanlout.re" = null;
+        "emby.tars.nyanlout.re" = null;
+        "radarr.tars.nyanlout.re" = null;
+        "transmission.tars.nyanlout.re" = null;
+      };
+      webroot = "/var/www/challenges/";
+      email = "paul@nyanlout.re";
+    };
+  };
+  security.acme.directory = "/var/lib/acme";
 
   services.influxdb.enable = true;
   services.influxdb.dataDir = "/var/db/influxdb";
