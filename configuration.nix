@@ -18,6 +18,8 @@
 
   boot.supportedFilesystems = [ "zfs" ];
 
+  services.zfs.autoSnapshot.enable = true;
+
   networking.hostName = "loutreos"; # Define your hostname.
   networking.hostId = "7e66e347";
 
