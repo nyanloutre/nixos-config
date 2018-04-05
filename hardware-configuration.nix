@@ -22,6 +22,11 @@
       fsType = "vfat";
     };
 
+  fileSystems."/mnt/coreos_drive" =
+    { device = "/dev/disk/by-uuid/bf1f6234-7f65-48a2-b7f8-4eab532eed90";
+      fsType = "ext4";
+    };
+
   fileSystems."/mnt/medias" =
     { device = "loutrepool/medias";
       fsType = "zfs";
