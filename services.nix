@@ -15,6 +15,9 @@
     defaults
       option forwardfor
       option http-server-close
+      timeout client 10s
+      timeout connect 4s
+      timeout server 30s
     userlist LOUTRE
       user paul password $6$6rDdCtzSVsAwB6KP$V8bR7KP7FSL2BSEh6n3op6iYhAnsVSPI2Ar3H6MwKrJ/lZRzUI8a0TwVBD2JPnAntUhLpmRudrvdq2Ls2odAy.
     frontend public
@@ -22,8 +25,8 @@
       bind :::443 v4v6 ssl crt /var/lib/acme/tars.nyanlout.re/full.pem
       mode http
       acl letsencrypt-acl path_beg /.well-known/acme-challenge/
-      use_backend letsencrypt-backend if letsencrypt-acl
       redirect scheme https code 301 if !{ ssl_fc } !letsencrypt-acl
+      use_backend letsencrypt-backend if letsencrypt-acl
       acl grafana-acl hdr(host) -i grafana.tars.nyanlout.re
       acl emby-acl hdr(host) -i emby.tars.nyanlout.re
       acl radarr-acl hdr(host) -i radarr.tars.nyanlout.re
@@ -79,6 +82,7 @@
       email = "paul@nyanlout.re";
       user = "haproxy";
       group = "haproxy";
+      postRun = "systemctl reload haproxy";
     };
   };
   security.acme.directory = "/var/lib/acme";
