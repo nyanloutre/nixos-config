@@ -1,7 +1,24 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
+
+with lib;
+
+let
+
+  haproxy_backends = {
+    grafana = { ip = "127.0.0.1"; port = 3000; auth = false; };
+    emby = { ip = "127.0.0.1"; port = 8096; auth = false; };
+    radarr = { ip = "127.0.0.1"; port = 7878; auth = false; };
+    transmission = { ip = "127.0.0.1"; port = 9091; auth = true; };
+    syncthing = { ip = "127.0.0.1"; port = 8384; auth = true; };
+  };
+
+  domaine = "tars.nyanlout.re";
+
+in
 
 {
   services.haproxy.enable = true;
+
   services.haproxy.config = ''
     global
       log /dev/log local0
@@ -22,44 +39,38 @@
       user paul password $6$6rDdCtzSVsAwB6KP$V8bR7KP7FSL2BSEh6n3op6iYhAnsVSPI2Ar3H6MwKrJ/lZRzUI8a0TwVBD2JPnAntUhLpmRudrvdq2Ls2odAy.
     frontend public
       bind :::80 v4v6
-      bind :::443 v4v6 ssl crt /var/lib/acme/tars.nyanlout.re/full.pem
+      bind :::443 v4v6 ssl crt /var/lib/acme/${domaine}/full.pem
       mode http
       acl letsencrypt-acl path_beg /.well-known/acme-challenge/
       redirect scheme https code 301 if !{ ssl_fc } !letsencrypt-acl
       use_backend letsencrypt-backend if letsencrypt-acl
-      acl grafana-acl hdr(host) -i grafana.tars.nyanlout.re
-      acl emby-acl hdr(host) -i emby.tars.nyanlout.re
-      acl radarr-acl hdr(host) -i radarr.tars.nyanlout.re
-      acl transmission-acl hdr(host) -i transmission.tars.nyanlout.re
-      acl syncthing-acl hdr(host) -i syncthing.tars.nyanlout.re
-      use_backend grafana-backend if grafana-acl
-      use_backend emby-backend if emby-acl
-      use_backend radarr-backend if radarr-acl
-      use_backend transmission-backend if transmission-acl
-      use_backend syncthing-backend if syncthing-acl
+
+    ${concatStrings (
+      mapAttrsToList (name: value:
+        "
+  acl ${name}-acl hdr(host) -i ${name}.${domaine}
+  use_backend ${name}-backend if ${name}-acl
+        ") haproxy_backends)}
+
     backend letsencrypt-backend
       mode http
       server letsencrypt 127.0.0.1:54321
-    backend grafana-backend
-      mode http
-      server grafana 127.0.0.1:3000 check
-    backend emby-backend
-      mode http
-      server emby 127.0.0.1:8096 check
-    backend radarr-backend
-      mode http
-      server radarr 127.0.0.1:7878 check
-    backend transmission-backend
-      mode http
-      acl AuthOK_LOUTRE http_auth(LOUTRE)
-      http-request auth realm LOUTRE if !AuthOK_LOUTRE
-      server transmission 127.0.0.1:9091 check
-    backend syncthing-backend
-      mode http
-      acl AuthOK_LOUTRE http_auth(LOUTRE)
-      http-request auth realm LOUTRE if !AuthOK_LOUTRE
-      server syncthing 127.0.0.1:8384 check
-  '';
+
+    ${concatStrings (
+      mapAttrsToList (name: value:
+        ''
+
+backend ${name}-backend
+  mode http
+  server ${name} ${value.ip}:${toString value.port}
+  ${(if value.auth then (
+    "
+  acl AuthOK_LOUTRE http_auth(LOUTRE)
+  http-request auth realm LOUTRE if !AuthOK_LOUTRE
+    ") else "")}
+        ''
+        ) haproxy_backends)}
+    '';
 
   services.nginx.enable = true;
   services.nginx.virtualHosts = {
@@ -70,14 +81,10 @@
   };
 
   security.acme.certs = {
-    "tars.nyanlout.re" = {
-      extraDomains = {
-        "grafana.tars.nyanlout.re" = null;
-        "emby.tars.nyanlout.re" = null;
-        "radarr.tars.nyanlout.re" = null;
-        "transmission.tars.nyanlout.re" = null;
-        "syncthing.tars.nyanlout.re" = null;
-      };
+    ${domaine} = {
+      extraDomains = mapAttrs' (name: value:
+        nameValuePair ("${name}.${domaine}") (null)
+      ) haproxy_backends;
       webroot = "/var/www/challenges/";
       email = "paul@nyanlout.re";
       user = "haproxy";
