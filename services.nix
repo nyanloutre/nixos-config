@@ -101,11 +101,16 @@
       mem = {};
       processes = {};
       system = {};
+      ipmi_sensor = { path = "${pkgs.ipmitool}/bin/ipmitool"; };
     };
     outputs = {
       influxdb = { database = "telegraf"; urls = [ "http://localhost:8086" ]; };
     };
   };
+
+  services.udev.extraRules = ''
+    KERNEL=="ipmi*", MODE="660", OWNER="telegraf"
+  '';
 
   services.grafana.enable = true;
   services.grafana.addr = "127.0.0.1";
