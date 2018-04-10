@@ -108,6 +108,7 @@ backend ${name}-backend
       mem = {};
       processes = {};
       system = {};
+      disk = {};
       ipmi_sensor = { path = "${pkgs.ipmitool}/bin/ipmitool"; };
     };
     outputs = {
