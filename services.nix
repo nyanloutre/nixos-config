@@ -8,6 +8,7 @@ let
     grafana = { ip = "127.0.0.1"; port = 3000; auth = false; };
     emby = { ip = "127.0.0.1"; port = 8096; auth = false; };
     radarr = { ip = "127.0.0.1"; port = 7878; auth = false; };
+    sonarr = { ip = "127.0.0.1"; port = 8989; auth = false; };
     transmission = { ip = "127.0.0.1"; port = 9091; auth = true; };
     syncthing = { ip = "127.0.0.1"; port = 8384; auth = true; };
   };
@@ -153,6 +154,8 @@ backend ${name}-backend
   };
 
   services.radarr.enable = true;
+
+  services.sonarr.enable = true;
 
   services.murmur.enable = true;
   services.murmur.bandwidth = 128000;
