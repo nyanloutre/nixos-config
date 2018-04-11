@@ -18,6 +18,10 @@ let
 in
 
 {
+  imports = [
+    ./mail-server.nix
+  ];
+
   services.haproxy.enable = true;
 
   services.haproxy.config = ''
@@ -161,6 +165,9 @@ backend ${name}-backend
   services.murmur.bandwidth = 128000;
   services.murmur.imgMsgLength = 0;
   services.murmur.textMsgLength = 0;
+
+  services.mailserver.enable = true;
+  services.mailserver.domaine = domaine;
 
   networking.firewall.allowedTCPPorts = [
     80 443 # HAProxy
