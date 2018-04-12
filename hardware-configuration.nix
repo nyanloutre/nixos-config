@@ -27,6 +27,46 @@
       fsType = "ext4";
     };
 
+  fileSystems."/var/lib/radarr" =
+    { device = "loutrepool/var/radarr";
+      fsType = "zfs";
+    };
+
+  fileSystems."/var/lib/slimserver" =
+    { device = "loutrepool/var/slimserver";
+      fsType = "zfs";
+    };
+
+  fileSystems."/var/lib/transmission" =
+    { device = "loutrepool/var/transmission";
+      fsType = "zfs";
+    };
+
+  fileSystems."/var/lib/grafana" =
+    { device = "loutrepool/var/grafana";
+      fsType = "zfs";
+    };
+
+  fileSystems."/var/lib/murmur" =
+    { device = "loutrepool/var/murmur";
+      fsType = "zfs";
+    };
+
+  fileSystems."/var/lib/emby/ProgramData-Server" =
+    { device = "loutrepool/var/emby";
+      fsType = "zfs";
+    };
+
+  fileSystems."/var/db/influxdb" =
+    { device = "loutrepool/var/influxdb";
+      fsType = "zfs";
+    };
+
+  fileSystems."/var/lib/duplicati" =
+    { device = "loutrepool/var/duplicati";
+      fsType = "zfs";
+    };
+
   fileSystems."/mnt/medias" =
     { device = "loutrepool/medias";
       fsType = "zfs";
@@ -37,18 +77,8 @@
       fsType = "zfs";
     };
 
-  fileSystems."/var/db/influxdb" =
-    { device = "loutrepool/var/influxdb";
-      fsType = "zfs";
-    };
-
-  fileSystems."/var/lib/grafana" =
-    { device = "loutrepool/var/grafana";
-      fsType = "zfs";
-    };
-
-  fileSystems."/var/lib/emby/ProgramData-Server" =
-    { device = "loutrepool/var/emby";
+  fileSystems."/var/lib/acme" =
+    { device = "loutrepool/var/acme";
       fsType = "zfs";
     };
 
@@ -57,33 +87,18 @@
       fsType = "zfs";
     };
 
-  fileSystems."/var/lib/duplicati" =
-    { device = "loutrepool/var/duplicati";
+  fileSystems."/var/vmail" =
+    { device = "loutrepool/var/vmail";
       fsType = "zfs";
     };
 
-  fileSystems."/var/lib/slimserver" =
-    { device = "loutrepool/var/slimserver";
+  fileSystems."/var/dkim" =
+    { device = "loutrepool/var/dkim";
       fsType = "zfs";
     };
 
-  fileSystems."/var/lib/acme" =
-    { device = "loutrepool/var/acme";
-      fsType = "zfs";
-    };
-
-  fileSystems."/var/lib/radarr" =
-    { device = "loutrepool/var/radarr";
-      fsType = "zfs";
-    };
-
-  fileSystems."/var/lib/transmission" =
-    { device = "loutrepool/var/transmission";
-      fsType = "zfs";
-    };
-
-  fileSystems."/var/lib/murmur" =
-    { device = "loutrepool/var/murmur";
+  fileSystems."/var/sieve" =
+    { device = "loutrepool/var/sieve";
       fsType = "zfs";
     };
 
