@@ -65,6 +65,8 @@
   security.sudo.wheelNeedsPassword = false;
 
   system.autoUpgrade.enable = true;
+  systemd.services.nixos-upgrade.path = with pkgs; [ gzip gnutar xz.bin config.nix.package.out ];
+
   nix.gc.automatic = true;
   nix.gc.options = "--delete-older-than 15d";
 }
