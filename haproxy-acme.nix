@@ -56,10 +56,11 @@ userlist LOUTRE
   user paul password $6$6rDdCtzSVsAwB6KP$V8bR7KP7FSL2BSEh6n3op6iYhAnsVSPI2Ar3H6MwKrJ/lZRzUI8a0TwVBD2JPnAntUhLpmRudrvdq2Ls2odAy.
 frontend public
   bind :::80 v4v6
-  bind :::443 v4v6 ssl crt /var/lib/acme/${cfg.domaine}/full.pem
+  bind :::443 v4v6 ssl crt /var/lib/acme/${cfg.domaine}/full.pem alpn h2,http/1.1
   mode http
   acl letsencrypt-acl path_beg /.well-known/acme-challenge/
   redirect scheme https code 301 if !{ ssl_fc } !letsencrypt-acl
+  http-response set-header Strict-Transport-Security max-age=15768000
   use_backend letsencrypt-backend if letsencrypt-acl
 
 ${concatStrings (
