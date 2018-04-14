@@ -57,6 +57,9 @@
     chromium
     torbrowser
 
+    tdesktop
+    mumble
+
     kleopatra
     gnupg
 
