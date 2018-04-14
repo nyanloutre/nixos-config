@@ -18,6 +18,6 @@
    };
 
   users.extraGroups.medias =
-  { members = [ "slimserver" "radarr" "sonarr" "emby" ];
+  { members = [ "slimserver" "radarr" "sonarr" "emby" "transmission" ];
   };
 }
