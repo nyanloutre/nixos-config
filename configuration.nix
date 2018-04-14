@@ -44,7 +44,14 @@
 
   nixpkgs.config.allowUnfree = true;
 
+  users.defaultUserShell = pkgs.zsh;
   programs.zsh.enable = true;
+  programs.zsh.enableAutosuggestions = true;
+  programs.zsh.enableCompletion = true;
+  programs.zsh.syntaxHighlighting.enable = true;
+  programs.zsh.ohMyZsh.enable = true;
+  programs.zsh.ohMyZsh.plugins = [ "git" "colored-man-pages" "command-not-found" "extract" ];
+  programs.zsh.ohMyZsh.theme = "bureau";
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
