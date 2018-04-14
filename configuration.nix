@@ -72,6 +72,7 @@
     yakuake
     konversation
     gwenview
+    kcalc
     
     libreoffice
     gimp
@@ -160,6 +161,13 @@
   programs.zsh.ohMyZsh.enable = true;
   programs.zsh.ohMyZsh.plugins = [ "git" "colored-man-pages" "command-not-found" "extract" "nyan" ];
   programs.zsh.ohMyZsh.theme = "bureau";
+
+  nix.gc.automatic = true;
+  nix.gc.options = "--delete-older-than 15d";
+
+  services.syncthing.enable = true;
+  services.syncthing.user = "paul";
+  services.syncthing.group = "users";
 
   # This value determines the NixOS release with which your system is to be
   # compatible, in order to avoid breaking some software such as database
