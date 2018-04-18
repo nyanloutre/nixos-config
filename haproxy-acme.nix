@@ -118,5 +118,9 @@ ${concatStrings (
     };
     security.acme.directory = "/var/lib/acme";
 
+    networking.firewall.allowedTCPPorts = [
+      80 443
+    ];
+
   };
 }

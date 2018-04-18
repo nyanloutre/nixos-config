@@ -95,7 +95,6 @@ in
   services.murmur.textMsgLength = 0;
 
   networking.firewall.allowedTCPPorts = [
-    80 443 # HAProxy
 #    111 2049 4000 4001 4002 # NFS
     3483 9000 9090 # Slimserver
     51413 # Transmission
