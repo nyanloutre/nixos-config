@@ -68,15 +68,15 @@ in
   services.syncthing.dataDir = "/var/lib/syncthing";
   services.syncthing.openDefaultPorts = true;
   
-#  services.nfs.server = {
-#    enable = true;
-#    exports = ''
-#      /exports/steam  192.168.1.0/24(rw,no_root_squash)
-#    '';
-#    statdPort = 4000;
-#    lockdPort = 4001;
-#    mountdPort = 4002;
-#  };
+  services.nfs.server = {
+    enable = true;
+    exports = ''
+      /mnt/medias  192.168.0.0/24(ro,no_root_squash)
+    '';
+    statdPort = 4000;
+    lockdPort = 4001;
+    mountdPort = 4002;
+  };
 
   services.transmission.enable = true;
   services.transmission.home = "/var/lib/transmission";
@@ -93,12 +93,12 @@ in
   services.searx.enable = true;
 
   networking.firewall.allowedTCPPorts = [
-#    111 2049 4000 4001 4002 # NFS
+    111 2049 4000 4001 4002 # NFS
     3483 9000 9090 # Slimserver
     51413 # Transmission
   ];
   networking.firewall.allowedUDPPorts = [
-#    111 2049 4000 4001 4002 # NFS
+    111 2049 4000 4001 4002 # NFS
     3483 # Slimserver
     51413 # Transmission
   ];
