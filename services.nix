@@ -22,6 +22,7 @@ in
     transmission = { ip = "127.0.0.1"; port = 9091; auth = true; };
     syncthing = { ip = "127.0.0.1"; port = 8384; auth = true; };
     jackett = { ip = "127.0.0.1"; port = 9117; auth = true; };
+    searx = { ip = "127.0.0.1"; port = 8888; auth = false; };
   };
 
   services.mailserver.enable = true;
@@ -88,6 +89,8 @@ in
   services.radarr.enable = true;
   services.sonarr.enable = true;
   services.jackett.enable = true;
+
+  services.searx.enable = true;
 
   networking.firewall.allowedTCPPorts = [
 #    111 2049 4000 4001 4002 # NFS
