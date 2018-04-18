@@ -89,11 +89,6 @@ in
   services.sonarr.enable = true;
   services.jackett.enable = true;
 
-  services.murmur.enable = true;
-  services.murmur.bandwidth = 128000;
-  services.murmur.imgMsgLength = 0;
-  services.murmur.textMsgLength = 0;
-
   networking.firewall.allowedTCPPorts = [
 #    111 2049 4000 4001 4002 # NFS
     3483 9000 9090 # Slimserver
