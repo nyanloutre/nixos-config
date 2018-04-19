@@ -4,6 +4,7 @@ with lib;
 
 let
   domaine = "nyanlout.re";
+  riot_port = 52345;
 in
 
 {
@@ -23,6 +24,7 @@ in
     syncthing = { ip = "127.0.0.1"; port = 8384; auth = true; };
     jackett = { ip = "127.0.0.1"; port = 9117; auth = true; };
     searx = { ip = "127.0.0.1"; port = 8888; auth = false; };
+    riot = { ip = "127.0.0.1"; port = riot_port; auth = false; };
   };
 
   services.mailserver.enable = true;
@@ -91,6 +93,14 @@ in
   services.jackett.enable = true;
 
   services.searx.enable = true;
+
+  services.nginx.enable = true;
+  services.nginx.virtualHosts = {
+    "riot" = {
+      listen = [ { addr = "127.0.0.1"; port = riot_port; } ];
+      locations = { "/" = { root = pkgs.riot-web; }; };
+    };
+  };
 
   networking.firewall.allowedTCPPorts = [
     111 2049 4000 4001 4002 # NFS
