@@ -3,7 +3,7 @@
 with lib;
 
 let
-  domaine = "tars.nyanlout.re";
+  domaine = "nyanlout.re";
 in
 
 {
