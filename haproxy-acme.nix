@@ -113,7 +113,9 @@ in
         email = "paul@nyanlout.re";
         user = "haproxy";
         group = "haproxy";
-        postRun = "systemctl reload haproxy";
+        postRun = ''
+          systemctl reload haproxy.service
+        '';
       };
     };
     security.acme.directory = "/var/lib/acme";
