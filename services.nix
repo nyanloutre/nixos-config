@@ -25,6 +25,7 @@ in
     jackett = { ip = "127.0.0.1"; port = 9117; auth = true; };
     searx = { ip = "127.0.0.1"; port = 8888; auth = false; };
     riot = { ip = "127.0.0.1"; port = riot_port; auth = false; };
+    matrix = { ip = "127.0.0.1"; port = 8008; auth = false; };
   };
 
   services.mailserver.enable = true;
@@ -102,10 +103,48 @@ in
     };
   };
 
+  services.postgresql.enable = true;
+  services.matrix-synapse = {
+    enable = true;
+    enable_registration = true;
+    server_name = "nyanlout.re";
+    listeners = [
+      { # federation
+        bind_address = "";
+        port = 8448;
+        resources = [
+          { compress = true; names = [ "client" "webclient" ]; }
+          { compress = false; names = [ "federation" ]; }
+        ];
+        tls = true;
+        type = "http";
+        x_forwarded = false;
+      }
+      { # client
+        bind_address = "127.0.0.1";
+        port = 8008;
+        resources = [
+          { compress = true; names = [ "client" "webclient" ]; }
+        ];
+        tls = false;
+        type = "http";
+        x_forwarded = true;
+      }
+    ];
+    database_type = "psycopg2";
+    database_args = {
+      database = "matrix-synapse";
+    };
+    extraConfig = ''
+      max_upload_size: "100M"
+    '';
+  };
+
   networking.firewall.allowedTCPPorts = [
     111 2049 4000 4001 4002 # NFS
     3483 9000 9090 # Slimserver
     51413 # Transmission
+    8448 # Matrix federation
   ];
   networking.firewall.allowedUDPPorts = [
     111 2049 4000 4001 4002 # NFS
