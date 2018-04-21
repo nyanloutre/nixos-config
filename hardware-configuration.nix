@@ -47,11 +47,6 @@
       fsType = "zfs";
     };
 
-  fileSystems."/var/lib/murmur" =
-    { device = "loutrepool/var/murmur";
-      fsType = "zfs";
-    };
-
   fileSystems."/var/lib/emby/ProgramData-Server" =
     { device = "loutrepool/var/emby";
       fsType = "zfs";
@@ -99,6 +94,11 @@
 
   fileSystems."/var/sieve" =
     { device = "loutrepool/var/sieve";
+      fsType = "zfs";
+    };
+
+  fileSystems."/var/lib/sonarr" =
+    { device = "loutrepool/var/sonarr";
       fsType = "zfs";
     };
 
