@@ -40,6 +40,7 @@
     neovim
     git
     tmux
+    ncdu
   ];
 
   nixpkgs.config.allowUnfree = true;
