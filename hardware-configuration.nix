@@ -102,6 +102,16 @@
       fsType = "zfs";
     };
 
+  fileSystems."/var/lib/postgresql" =
+    { device = "loutrepool/var/postgresql";
+      fsType = "zfs";
+    };
+
+  fileSystems."/var/lib/matrix-synapse" =
+    { device = "loutrepool/var/matrix-synapse";
+      fsType = "zfs";
+    };
+
   swapDevices =
     [ { device = "/var/swapfile"; }
     ];
