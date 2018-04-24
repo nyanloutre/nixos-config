@@ -4,7 +4,9 @@ with lib;
 
 let
   domaine = "nyanlout.re";
+
   riot_port = 52345;
+  organizr_port = 52346;
 in
 
 {
@@ -26,6 +28,7 @@ in
     searx = { ip = "127.0.0.1"; port = 8888; auth = false; };
     riot = { ip = "127.0.0.1"; port = riot_port; auth = false; };
     matrix = { ip = "127.0.0.1"; port = 8008; auth = false; };
+    organizr = { ip = "127.0.0.1"; port = organizr_port; auth = true; };
   };
 
   services.mailserver.enable = true;
@@ -109,7 +112,42 @@ in
       listen = [ { addr = "127.0.0.1"; port = riot_port; } ];
       locations = { "/" = { root = pkgs.riot-web_custom; }; };
     };
+    "organizr" = {
+      listen = [ { addr = "127.0.0.1"; port = organizr_port; } ];
+      locations."/" = {
+        root = (builtins.fetchTarball {
+          url = "https://github.com/causefx/Organizr/archive/1.75.tar.gz";
+          sha256 = "13h6cgqq3gyg5d3ikj7k85igpg6al7y9xdsxammkr8y5dzfbkm36";
+        });
+        index = "index.php";
+        extraConfig = ''
+          location ~* \.php$ {
+            fastcgi_split_path_info ^(.+\.php)(/.+)$;
+            fastcgi_pass unix:/run/phpfpm/nginx;
+            include ${pkgs.nginx}/conf/fastcgi_params;
+            include ${pkgs.nginx}/conf/fastcgi.conf;
+          }
+        '';
+      };
+    };
   };
+
+  services.phpfpm.poolConfigs.mypool = ''
+    listen = /run/phpfpm/nginx
+    listen.owner = nginx
+    listen.group = nginx
+    listen.mode = 0660
+    user = nginx
+    pm = dynamic
+    pm.max_children = 75
+    pm.start_servers = 2
+    pm.min_spare_servers = 1
+    pm.max_spare_servers = 20
+    pm.max_requests = 500
+    php_admin_value[error_log] = 'stderr'
+    php_admin_flag[log_errors] = on
+    catch_workers_output = yes
+  '';
 
   services.postgresql.enable = true;
   services.matrix-synapse = {
