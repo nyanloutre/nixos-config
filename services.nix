@@ -121,10 +121,7 @@ in
     "organizr" = {
       listen = [ { addr = "127.0.0.1"; port = organizr_port; } ];
       locations."/" = {
-        root = (builtins.fetchTarball {
-          url = "https://github.com/causefx/Organizr/archive/1.75.tar.gz";
-          sha256 = "13h6cgqq3gyg5d3ikj7k85igpg6al7y9xdsxammkr8y5dzfbkm36";
-        });
+        root = (import ./organizr.nix);
         index = "index.php";
         extraConfig = ''
           location ~* \.php$ {
