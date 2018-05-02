@@ -29,6 +29,7 @@ in
     riot = { ip = "127.0.0.1"; port = riot_port; auth = false; };
     matrix = { ip = "127.0.0.1"; port = 8008; auth = false; };
     organizr = { ip = "127.0.0.1"; port = organizr_port; auth = true; };
+    calibre = { ip = "127.0.0.1"; port = 8080; auth = false; };
   };
 
   services.mailserver.enable = true;
@@ -187,6 +188,12 @@ in
     extraConfig = ''
       max_upload_size: "100M"
     '';
+  };
+
+  services.calibre-server.enable = true;
+  services.calibre-server.libraryDir = "/var/lib/calibre";
+  users.extraUsers.calibre-server = {
+    home = "/var/lib/calibre";
   };
 
   networking.firewall.allowedTCPPorts = [
