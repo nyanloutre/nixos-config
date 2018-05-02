@@ -7,6 +7,7 @@ let
 
   riot_port = 52345;
   organizr_port = 52346;
+  pgmanage_port = 52347;
 in
 
 {
@@ -30,6 +31,7 @@ in
     matrix = { ip = "127.0.0.1"; port = 8008; auth = false; };
     organizr = { ip = "127.0.0.1"; port = organizr_port; auth = true; };
     calibre = { ip = "127.0.0.1"; port = 8080; auth = false; };
+    pgmanage = { ip = "127.0.0.1"; port = pgmanage_port; auth = true; };
   };
 
   services.mailserver.enable = true;
@@ -194,6 +196,12 @@ in
   services.calibre-server.libraryDir = "/var/lib/calibre";
   users.extraUsers.calibre-server = {
     home = "/var/lib/calibre";
+  };
+
+  services.pgmanage.enable = true;
+  services.pgmanage.port = pgmanage_port;
+  services.pgmanage.connections = {
+    localhost = "hostaddr=127.0.0.1 port=5432 dbname=postgres";
   };
 
   networking.firewall.allowedTCPPorts = [
