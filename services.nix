@@ -118,7 +118,7 @@ in
     "organizr" = {
       listen = [ { addr = "127.0.0.1"; port = organizr_port; } ];
       locations."/" = {
-        root = (import ./organizr.nix);
+        root = pkgs.organizr;
         index = "index.php";
         extraConfig = ''
           location ~* \.php$ {

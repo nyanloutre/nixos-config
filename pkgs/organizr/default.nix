@@ -1,4 +1,4 @@
-with import <nixpkgs> {};
+{ stdenv, fetchFromGitHub }:
 
 stdenv.mkDerivation rec {
   name = "organizr-${version}";

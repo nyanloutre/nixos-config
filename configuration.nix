@@ -39,6 +39,7 @@
   nixpkgs.overlays = [
     (import ./overlays/riot-web.nix)
     (import ./overlays/lidarr.nix)
+    (import ./overlays/organizr.nix)
   ];
   environment.systemPackages = with pkgs; [
     neovim
