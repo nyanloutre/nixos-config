@@ -108,18 +108,10 @@ in
   services.searx.enable = true;
 
   services.nginx.enable = true;
-  nixpkgs.overlays = [ (self: super: { riot-web_custom = super.riot-web.override { conf = ''
-    {
-      "default_hs_url": "https://matrix.nyanlout.re",
-      "default_is_url": "https://vector.im",
-      "brand": "Nyanloutre",
-      "default_theme": "dark"
-    }
-  ''; }; } ) ];
   services.nginx.virtualHosts = {
     "riot" = {
       listen = [ { addr = "127.0.0.1"; port = riot_port; } ];
-      locations = { "/" = { root = pkgs.riot-web_custom; }; };
+      locations = { "/" = { root = pkgs.riot-web; }; };
     };
     "organizr" = {
       listen = [ { addr = "127.0.0.1"; port = organizr_port; } ];
