@@ -12,8 +12,8 @@ in
 
 {
   imports = [
-    ./haproxy-acme.nix
-    ./mail-server.nix
+    ./services/haproxy-acme.nix
+    ./services/mail-server.nix
   ];
 
   services.haproxy-acme.enable = true;
