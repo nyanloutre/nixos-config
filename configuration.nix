@@ -38,6 +38,7 @@
   # $ nix-env -qaP | grep wget
   nixpkgs.overlays = [
     (import ./overlays/riot-web.nix)
+    (import ./overlays/lidarr.nix)
   ];
   environment.systemPackages = with pkgs; [
     neovim

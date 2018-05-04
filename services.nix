@@ -14,6 +14,7 @@ in
   imports = [
     ./services/haproxy-acme.nix
     ./services/mail-server.nix
+    ./services/lidarr.nix
   ];
 
   services.haproxy-acme.enable = true;
@@ -23,6 +24,7 @@ in
     emby = { ip = "127.0.0.1"; port = 8096; auth = false; };
     radarr = { ip = "127.0.0.1"; port = 7878; auth = false; };
     sonarr = { ip = "127.0.0.1"; port = 8989; auth = false; };
+    lidarr = { ip = "127.0.0.1"; port = 8686; auth = false; };
     transmission = { ip = "127.0.0.1"; port = 9091; auth = true; };
     syncthing = { ip = "127.0.0.1"; port = 8384; auth = true; };
     jackett = { ip = "127.0.0.1"; port = 9117; auth = true; };
