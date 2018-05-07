@@ -40,6 +40,7 @@
     (import ./overlays/riot-web.nix)
     (import ./overlays/lidarr.nix)
     (import ./overlays/organizr.nix)
+    (import ./overlays/sudo.nix)
   ];
   environment.systemPackages = with pkgs; [
     neovim
