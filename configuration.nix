@@ -59,6 +59,8 @@
   programs.zsh.ohMyZsh.plugins = [ "git" "colored-man-pages" "command-not-found" "extract" ];
   programs.zsh.ohMyZsh.theme = "bureau";
 
+  environment.variables = { EDITOR = "nvim"; };
+
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.bash.enableCompletion = true;
