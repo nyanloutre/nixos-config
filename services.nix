@@ -89,6 +89,7 @@ in
     enable = true;
     exports = ''
       /mnt/medias  192.168.0.0/24(ro,no_root_squash)
+      /exports/steam  192.168.0.0/24(rw,no_root_squash)
     '';
     statdPort = 4000;
     lockdPort = 4001;
