@@ -42,6 +42,7 @@
     (import ./overlays/organizr.nix)
     (import ./overlays/sudo.nix)
     (import ./overlays/site-max.nix)
+    (import ./overlays/site-musique.nix)
   ];
   environment.systemPackages = with pkgs; [
     neovim
