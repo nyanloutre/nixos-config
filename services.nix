@@ -8,6 +8,7 @@ let
   riot_port = 52345;
   organizr_port = 52346;
   pgmanage_port = 52347;
+  max_port = 52348;
 in
 
 {
@@ -34,6 +35,7 @@ in
     organizr = { ip = "127.0.0.1"; port = organizr_port; auth = true; };
     calibre = { ip = "127.0.0.1"; port = 8080; auth = false; };
     pgmanage = { ip = "127.0.0.1"; port = pgmanage_port; auth = true; };
+    max = { ip = "127.0.0.1"; port = max_port; auth = false; };
   };
 
   services.mailserver.enable = true;
@@ -130,6 +132,10 @@ in
           }
         '';
       };
+    };
+    "max" = {
+      listen = [ { addr = "127.0.0.1"; port = max_port; } ];
+      locations = { "/" = { root = pkgs.site-max; }; };
     };
   };
 
