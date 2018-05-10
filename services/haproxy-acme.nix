@@ -22,7 +22,11 @@ in
     };
 
     services = mkOption {
-      type = types.attrsOf types.attrs;
+      type = with types; attrsOf (submodule { options = {
+        ip = mkOption { type = str; description = "IP address"; };
+        port = mkOption { type = int; description = "Port number"; };
+        auth = mkOption { type = bool; description = "Enable authentification"; default = false; };
+      }; });
       example = ''
         haproxy_backends = {
           example = { ip = "127.0.0.1"; port = 1234; auth = false; };

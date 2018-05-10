@@ -17,6 +17,7 @@ in
     ./services/haproxy-acme.nix
     ./services/mail-server.nix
     ./services/lidarr.nix
+    ./services/site-musique.nix
   ];
 
   services.haproxy-acme.enable = true;
@@ -37,7 +38,6 @@ in
     calibre = { ip = "127.0.0.1"; port = 8080; auth = false; };
     pgmanage = { ip = "127.0.0.1"; port = pgmanage_port; auth = true; };
     max = { ip = "127.0.0.1"; port = max_port; auth = false; };
-    musique = { ip = "127.0.0.1"; port = musique_port; auth = false; };
   };
 
   services.mailserver.enable = true;
@@ -139,21 +139,6 @@ in
       listen = [ { addr = "127.0.0.1"; port = max_port; } ];
       locations = { "/" = { root = pkgs.site-max; }; };
     };
-    "musique" = {
-      listen = [ { addr = "127.0.0.1"; port = musique_port; } ];
-      locations."/" = {
-        root = pkgs.site-musique;
-        index = "index.php";
-        extraConfig = ''
-          location ~* \.php$ {
-            fastcgi_split_path_info ^(.+\.php)(/.+)$;
-            fastcgi_pass unix:/run/phpfpm/nginx;
-            include ${pkgs.nginx}/conf/fastcgi_params;
-            include ${pkgs.nginx}/conf/fastcgi.conf;
-          }
-        '';
-      };
-    };
   };
 
   services.phpfpm.poolConfigs.mypool = ''
@@ -221,6 +206,9 @@ in
   services.pgmanage.connections = {
     localhost = "hostaddr=127.0.0.1 port=5432 dbname=postgres";
   };
+
+  services.site-musique.enable = true;
+  services.site-musique.port = musique_port;
 
   networking.firewall.allowedTCPPorts = [
     111 2049 4000 4001 4002 # NFS
