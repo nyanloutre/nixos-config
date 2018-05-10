@@ -2,13 +2,13 @@
 
 stdenv.mkDerivation rec {
   name= "site-max-${version}";
-  version = "1.0.0";
+  version = "1.0.1";
 
   src = fetchFromGitHub {
     owner = "nyanloutre";
     repo = "site-max";
-    rev = "d867dc88282802fda5616c0320456cab38e57d88";
-    sha256 = "05q1jn0ak04kpcih51nxsy4phf15vg2xlsvp26lycncfygkq2vy0";
+    rev = "85e30457291e6a1dfe85a5d7a78f226657bad279";
+    sha256 = "0fj5w43gcvp0gq0xlknrf6yp0b48wg01686wp02fjc9npm424g0v";
   };
 
   buildPhase = ''
