@@ -24,20 +24,20 @@ in
   services.haproxy-acme.enable = true;
   services.haproxy-acme.domaine = domaine;
   services.haproxy-acme.services = {
-    grafana = { ip = "127.0.0.1"; port = 3000; auth = false; };
-    emby = { ip = "127.0.0.1"; port = 8096; auth = false; };
-    radarr = { ip = "127.0.0.1"; port = 7878; auth = false; };
-    sonarr = { ip = "127.0.0.1"; port = 8989; auth = false; };
-    lidarr = { ip = "127.0.0.1"; port = 8686; auth = false; };
-    transmission = { ip = "127.0.0.1"; port = 9091; auth = true; };
-    syncthing = { ip = "127.0.0.1"; port = 8384; auth = true; };
-    jackett = { ip = "127.0.0.1"; port = 9117; auth = true; };
-    searx = { ip = "127.0.0.1"; port = 8888; auth = false; };
-    riot = { ip = "127.0.0.1"; port = riot_port; auth = false; };
-    matrix = { ip = "127.0.0.1"; port = 8008; auth = false; };
-    organizr = { ip = "127.0.0.1"; port = organizr_port; auth = true; };
-    calibre = { ip = "127.0.0.1"; port = 8080; auth = false; };
-    pgmanage = { ip = "127.0.0.1"; port = pgmanage_port; auth = true; };
+    "grafana.${domaine}" = { ip = "127.0.0.1"; port = 3000; auth = false; };
+    "emby.${domaine}" = { ip = "127.0.0.1"; port = 8096; auth = false; };
+    "radarr.${domaine}" = { ip = "127.0.0.1"; port = 7878; auth = false; };
+    "sonarr.${domaine}" = { ip = "127.0.0.1"; port = 8989; auth = false; };
+    "lidarr.${domaine}" = { ip = "127.0.0.1"; port = 8686; auth = false; };
+    "transmission.${domaine}" = { ip = "127.0.0.1"; port = 9091; auth = true; };
+    "syncthing.${domaine}" = { ip = "127.0.0.1"; port = 8384; auth = true; };
+    "jackett.${domaine}" = { ip = "127.0.0.1"; port = 9117; auth = true; };
+    "searx.${domaine}" = { ip = "127.0.0.1"; port = 8888; auth = false; };
+    "riot.${domaine}" = { ip = "127.0.0.1"; port = riot_port; auth = false; };
+    "matrix.${domaine}" = { ip = "127.0.0.1"; port = 8008; auth = false; };
+    "organizr.${domaine}" = { ip = "127.0.0.1"; port = organizr_port; auth = true; };
+    "calibre.${domaine}" = { ip = "127.0.0.1"; port = 8080; auth = false; };
+    "pgmanage.${domaine}" = { ip = "127.0.0.1"; port = pgmanage_port; auth = true; };
   };
 
   services.mailserver.enable = true;
@@ -205,9 +205,11 @@ in
 
   services.site-musique.enable = true;
   services.site-musique.port = musique_port;
+  services.site-musique.domaine = "musique.${domaine}";
 
   services.site-max.enable = true;
   services.site-max.port = max_port;
+  services.site-max.domaine = "max.${domaine}";
 
   networking.firewall.allowedTCPPorts = [
     111 2049 4000 4001 4002 # NFS

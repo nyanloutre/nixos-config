@@ -14,12 +14,18 @@ in
       example = 54321;
       description = "Local listening port";
     };
+
+    domaine = mkOption {
+      type = types.str;
+      example = "example.com";
+      description = "Domaine à utiliser";
+    };
   };
 
   config = mkIf cfg.enable {
 
     services.haproxy-acme.services = {
-      max = { ip = "127.0.0.1"; port = cfg.port; auth = false; };
+      ${cfg.domaine} = { ip = "127.0.0.1"; port = cfg.port; auth = false; };
     };
 
     services.nginx.virtualHosts = {

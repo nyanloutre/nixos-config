@@ -71,7 +71,7 @@ in
 
       ${concatStrings (
         mapAttrsToList (name: value:
-          "  acl ${name}-acl hdr(host) -i ${name}.${cfg.domaine}\n"
+          "  acl ${name}-acl hdr(host) -i ${name}\n"
         + "  use_backend ${name}-backend if ${name}-acl\n"
         ) cfg.services)}
 
@@ -111,9 +111,9 @@ in
     security.acme.certs = {
       ${cfg.domaine} = {
         extraDomains = mapAttrs' (name: value:
-          nameValuePair ("${name}.${cfg.domaine}") (null)
+          nameValuePair ("${name}") (null)
         ) cfg.services;
-        webroot = "/var/www/challenges/";
+        webroot = "/var/www/challenges";
         email = "paul@nyanlout.re";
         user = "haproxy";
         group = "haproxy";
