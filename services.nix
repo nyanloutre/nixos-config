@@ -21,6 +21,10 @@ in
     ./services/site-max.nix
   ];
 
+  services.smartd.enable = true;
+  services.smartd.notifications.mail.enable = true;
+  services.smartd.notifications.mail.recipient = "paul@nyanlout.re";
+
   services.haproxy-acme.enable = true;
   services.haproxy-acme.domaine = domaine;
   services.haproxy-acme.services = {
