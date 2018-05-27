@@ -17,23 +17,13 @@
       fsType = "ext4";
     };
 
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/BAA3-0464";
-      fsType = "vfat";
-    };
-
   fileSystems."/mnt/coreos_drive" =
     { device = "/dev/disk/by-uuid/bf1f6234-7f65-48a2-b7f8-4eab532eed90";
       fsType = "ext4";
     };
 
-  fileSystems."/var/lib/radarr" =
-    { device = "loutrepool/var/radarr";
-      fsType = "zfs";
-    };
-
-  fileSystems."/var/lib/slimserver" =
-    { device = "loutrepool/var/slimserver";
+  fileSystems."/var/lib/acme" =
+    { device = "loutrepool/var/acme";
       fsType = "zfs";
     };
 
@@ -42,13 +32,23 @@
       fsType = "zfs";
     };
 
+  fileSystems."/var/lib/matrix-synapse" =
+    { device = "loutrepool/var/matrix-synapse";
+      fsType = "zfs";
+    };
+
+  fileSystems."/var/lib/radarr" =
+    { device = "loutrepool/var/radarr";
+      fsType = "zfs";
+    };
+
   fileSystems."/var/lib/grafana" =
     { device = "loutrepool/var/grafana";
       fsType = "zfs";
     };
 
-  fileSystems."/var/lib/emby/ProgramData-Server" =
-    { device = "loutrepool/var/emby";
+  fileSystems."/var/lib/slimserver" =
+    { device = "loutrepool/var/slimserver";
       fsType = "zfs";
     };
 
@@ -57,13 +57,8 @@
       fsType = "zfs";
     };
 
-  fileSystems."/var/lib/duplicati" =
-    { device = "loutrepool/var/duplicati";
-      fsType = "zfs";
-    };
-
-  fileSystems."/mnt/medias" =
-    { device = "loutrepool/medias";
+  fileSystems."/var/lib/postgresql" =
+    { device = "loutrepool/var/postgresql";
       fsType = "zfs";
     };
 
@@ -72,8 +67,8 @@
       fsType = "zfs";
     };
 
-  fileSystems."/var/lib/acme" =
-    { device = "loutrepool/var/acme";
+  fileSystems."/var/lib/emby/ProgramData-Server" =
+    { device = "loutrepool/var/emby";
       fsType = "zfs";
     };
 
@@ -82,13 +77,8 @@
       fsType = "zfs";
     };
 
-  fileSystems."/var/vmail" =
-    { device = "loutrepool/var/vmail";
-      fsType = "zfs";
-    };
-
-  fileSystems."/var/dkim" =
-    { device = "loutrepool/var/dkim";
+  fileSystems."/mnt/medias" =
+    { device = "loutrepool/medias";
       fsType = "zfs";
     };
 
@@ -97,18 +87,28 @@
       fsType = "zfs";
     };
 
+  fileSystems."/var/vmail" =
+    { device = "loutrepool/var/vmail";
+      fsType = "zfs";
+    };
+
   fileSystems."/var/lib/sonarr" =
     { device = "loutrepool/var/sonarr";
       fsType = "zfs";
     };
 
-  fileSystems."/var/lib/postgresql" =
-    { device = "loutrepool/var/postgresql";
+  fileSystems."/var/dkim" =
+    { device = "loutrepool/var/dkim";
       fsType = "zfs";
     };
 
-  fileSystems."/var/lib/matrix-synapse" =
-    { device = "loutrepool/var/matrix-synapse";
+  fileSystems."/boot" =
+    { device = "/dev/disk/by-uuid/BAA3-0464";
+      fsType = "vfat";
+    };
+
+  fileSystems."/mnt/backup" =
+    { device = "backup";
       fsType = "zfs";
     };
 

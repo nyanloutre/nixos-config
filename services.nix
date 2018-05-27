@@ -207,6 +207,41 @@ in
     localhost = "hostaddr=127.0.0.1 port=5432 dbname=postgres";
   };
 
+  services.borgbackup.jobs = {
+    loutre = {
+      paths = [
+        "/var/lib/transmission"
+        "/var/vmail"
+        "/var/dkim"
+        "/var/lib/grafana"
+        "/var/lib/matrix-synapse"
+        "/var/lib/postgresql/.zfs/snapshot/borgsnap"
+        "/var/lib/syncthing"
+        "/mnt/medias/musique"
+        "/mnt/medias/torrent/lidarr"
+        "/mnt/medias/torrent/musique"
+      ];
+      repo = "/mnt/backup/borg";
+      encryption = {
+        mode = "repokey-blake2";
+        passCommand = "cat /root/borg/medias_encryption_pass";
+      };
+      startAt = "weekly";
+      prune.keep = {
+        within = "1d";
+        weekly = 4;
+        monthly = 12;
+      };
+      preHook = "${pkgs.zfs}/bin/zfs snapshot loutrepool/var/postgresql@borgsnap";
+      postHook = ''
+        ${pkgs.zfs}/bin/zfs destroy loutrepool/var/postgresql@borgsnap
+        if [[ $exitStatus == 0 ]]; then
+          ${pkgs.rclone}/bin/rclone --config /root/.config/rclone/rclone.conf sync -v $BORG_REPO loutre_ovh:loutre
+        fi
+      '';
+    };
+  };
+
   services.site-musique.enable = true;
   services.site-musique.port = musique_port;
   services.site-musique.domaine = "musique.${domaine}";
