@@ -195,12 +195,6 @@ in
     '';
   };
 
-  services.calibre-server.enable = true;
-  services.calibre-server.libraryDir = "/var/lib/calibre";
-  users.extraUsers.calibre-server = {
-    home = "/var/lib/calibre";
-  };
-
   services.pgmanage.enable = true;
   services.pgmanage.port = pgmanage_port;
   services.pgmanage.connections = {
