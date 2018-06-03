@@ -248,7 +248,7 @@ in
 
   services.site-max.enable = true;
   services.site-max.port = max_port;
-  services.site-max.domaine = "max.${domaine}";
+  services.site-max.domaine = "maxspiegel.fr";
 
   networking.firewall.allowedTCPPorts = [
     111 2049 4000 4001 4002 # NFS
