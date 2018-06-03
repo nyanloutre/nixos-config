@@ -13,12 +13,7 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/a4ee920a-6539-4c78-aa5b-a61bf27c002d";
-      fsType = "ext4";
-    };
-
-  fileSystems."/mnt/coreos_drive" =
-    { device = "/dev/disk/by-uuid/bf1f6234-7f65-48a2-b7f8-4eab532eed90";
+    { device = "/dev/disk/by-label/nixos";
       fsType = "ext4";
     };
 
@@ -103,7 +98,7 @@
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/BAA3-0464";
+    { device = "/dev/disk/by-label/boot";
       fsType = "vfat";
     };
 
@@ -113,7 +108,11 @@
     };
 
   swapDevices =
-    [ { device = "/var/swapfile"; }
+    [
+      {
+        device = "/var/swapfile";
+        size = 8096;
+      }
     ];
 
   nix.maxJobs = lib.mkDefault 4;
